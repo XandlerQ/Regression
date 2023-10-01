@@ -9,11 +9,22 @@ public class ParameterRational extends ParameterFunction {
         this.denominator = null;
     }
 
-    ParameterRational(ParameterPolynomial numerator, ParameterPolynomial denominator) {
+    ParameterRational(double[] numerator, double[] denominator) {
         this.type = "Rational";
-        this.parameterCount = numerator.getParameterCount() + denominator.getParameterCount();
-        this.numerator = numerator;
-        this.denominator = denominator;
+        this.numerator = new ParameterPolynomial(numerator);
+        this.denominator = new ParameterPolynomial(denominator);
+        this.parameterCount = this.numerator.getParameterCount() + this.denominator.getParameterCount();
+    }
+
+    ParameterRational(double[] parameters, int numeratorDegree) {
+        this.type = "Rational";
+        double[] numerator = new double[numeratorDegree + 1];
+        double[] denominator = new double[parameters.length - numeratorDegree - 1];
+        System.arraycopy(parameters, 0, numerator, 0, numerator.length);
+        for (int i = 0; i < denominator.length; i++) denominator[i] = parameters[i + numeratorDegree + 1];
+        this.numerator = new ParameterPolynomial(numerator);
+        this.denominator = new ParameterPolynomial(denominator);
+        this.parameterCount = this.numerator.getParameterCount() + this.denominator.getParameterCount();
     }
 
     public ParameterPolynomial getNumerator() {
@@ -26,10 +37,24 @@ public class ParameterRational extends ParameterFunction {
 
     public void setNumerator(ParameterPolynomial numerator) {
         this.numerator = numerator;
+        this.parameterCount = numerator.getParameterCount() + this.denominator.getParameterCount();
     }
 
     public void setDenominator(ParameterPolynomial denominator) {
         this.denominator = denominator;
+        this.parameterCount = this.numerator.getParameterCount() + denominator.getParameterCount();
+    }
+
+    @Override
+    public double[] getParameters() {
+        double[] parameters = new double[this.parameterCount];
+        for (int i = 0; i <= this.numerator.getDegree(); i++) {
+            parameters[i] = this.numerator.getCoefficients()[i];
+        }
+        for (int i = 0; i <= this.denominator.getDegree(); i++) {
+            parameters[i + this.numerator.getDegree() + 1] = this.denominator.getCoefficients()[i];
+        }
+        return parameters;
     }
 
     @Override
@@ -43,6 +68,28 @@ public class ParameterRational extends ParameterFunction {
     }
 
     @Override
+    public void adjustParameter(int i, double value) {
+        if (i <= this.numerator.getDegree()) {
+            this.numerator.adjustParameter(i, value);
+        }
+        else {
+            int position = i - this.numerator.getDegree() - 1;
+            this.denominator.adjustParameter(position, value);
+        }
+    }
+
+    @Override
+    public void setParameter(int i, double value) {
+        if (i <= this.numerator.getDegree()) {
+            this.numerator.setParameter(i, value);
+        }
+        else {
+            int position = i - this.numerator.getDegree() - 1;
+            this.denominator.setParameter(position, value);
+        }
+    }
+
+    @Override
     public double evaluateAt(double x) {
         double denominatorValue = this.denominator.evaluateAt(x);
         if (denominatorValue == 0) return Double.NaN;
@@ -51,7 +98,7 @@ public class ParameterRational extends ParameterFunction {
 
     @Override
     public double[] squareErrorParameterAntiGradient(double[] X, double[] Y) {
-        double[] antiGradient = new double[this.numerator.getDegree() + this.denominator.getDegree() + 2];
+        double[] antiGradient = new double[this.parameterCount];
         for (int i = 0; i < X.length; i++) {
             double denominatorValue = this.denominator.evaluateAt(X[i]);
             if (denominatorValue == 0) continue;

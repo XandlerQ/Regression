@@ -36,14 +36,30 @@ public class ParameterPolynomial extends ParameterFunction {
     public void setCoefficients(double[] coefficients) {
         this.coefficients = coefficients;
         this.degree = coefficients.length - 1;
+        this.parameterCount = this.degree + 1;
         normalize();
     }
 
     @Override
+    public double[] getParameters() {
+        double[] parameters = new double[this.degree + 1];
+        System.arraycopy(this.coefficients, 0, parameters, 0, this.degree + 1);
+        return parameters;
+    }
+
+    @Override
     public void setParameters(double[] parameters) {
-        for (int i = 0; i <= this.degree; i++) {
-            this.coefficients[i] = parameters[i];
-        }
+        if (this.degree + 1 >= 0) System.arraycopy(parameters, 0, this.coefficients, 0, this.degree + 1);
+    }
+
+    @Override
+    public void adjustParameter(int i, double value) {
+        this.coefficients[i] += value;
+    }
+
+    @Override
+    public void setParameter(int i, double value) {
+        this.coefficients[i] = value;
     }
 
     void normalize() {
@@ -74,7 +90,7 @@ public class ParameterPolynomial extends ParameterFunction {
 
     @Override
     public double[] squareErrorParameterAntiGradient(double[] X, double[] Y) {
-        double[] antiGradient = new double[this.degree + 1];
+        double[] antiGradient = new double[this.parameterCount];
         for (int i = 0; i < X.length; i++) {
             double error = evaluateAt(X[i]) - Y[i];
             double tech = 2 * error;
@@ -86,4 +102,5 @@ public class ParameterPolynomial extends ParameterFunction {
         }
         return antiGradient;
     }
+
 }

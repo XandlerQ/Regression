@@ -2,12 +2,16 @@ public class PojoProblem {
     private String type;
     private double[] X;
     private double[] Y;
+    private double[] initialParameters;
+    private int numeratorDegree;
     private String solver;
 
     PojoProblem() {
         this.type = "None";
         this.X = null;
         this.Y = null;
+        this.initialParameters = null;
+        this.numeratorDegree = -1;
         this.solver = "None";
     }
 
@@ -21,6 +25,14 @@ public class PojoProblem {
 
     public double[] getY() {
         return Y;
+    }
+
+    public double[] getInitialParameters() {
+        return initialParameters;
+    }
+
+    public int getNumeratorDegree() {
+        return numeratorDegree;
     }
 
     public String getSolver() {
@@ -37,6 +49,14 @@ public class PojoProblem {
 
     public void setY(double[] y) {
         Y = y;
+    }
+
+    public void setInitialParameters(double[] initialParameters) {
+        this.initialParameters = initialParameters;
+    }
+
+    public void setNumeratorDegree(int numeratorDegree) {
+        this.numeratorDegree = numeratorDegree;
     }
 
     public void setSolver(String solver) {

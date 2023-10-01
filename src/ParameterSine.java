@@ -19,6 +19,14 @@ public class ParameterSine extends ParameterFunction {
         this.omega = omega;
     }
 
+    ParameterSine(double[] parameters) {
+        this.type = "Sine";
+        this.parameterCount = 3;
+        this.k = parameters[0];
+        this.phi = parameters[1];
+        this.omega = parameters[2];
+    }
+
     public double getK() {
         return k;
     }
@@ -44,10 +52,37 @@ public class ParameterSine extends ParameterFunction {
     }
 
     @Override
+    public double[] getParameters() {
+        double[] parameters = new double[this.parameterCount];
+        parameters[0] = this.k;
+        parameters[1] = this.phi;
+        parameters[2] = this.omega;
+        return parameters;
+    }
+
+    @Override
     public void setParameters(double[] parameters) {
         this.k = parameters[0];
         this.phi = parameters[1];
         this.omega = parameters[2];
+    }
+
+    @Override
+    public void adjustParameter(int i, double value) {
+        switch (i) {
+            case 0 -> this.k += value;
+            case 1 -> this.phi += value;
+            case 2 -> this.omega += value;
+        }
+    }
+
+    @Override
+    public void setParameter(int i, double value) {
+        switch (i) {
+            case 0 -> this.k = value;
+            case 1 -> this.phi = value;
+            case 2 -> this.omega = value;
+        }
     }
 
     @Override
@@ -57,7 +92,7 @@ public class ParameterSine extends ParameterFunction {
 
     @Override
     public double[] squareErrorParameterAntiGradient(double[] X, double[] Y) {
-        double[] antiGradient = new double[3];
+        double[] antiGradient = new double[this.parameterCount];
         for (int i = 0; i < X.length; i++) {
             double error = evaluateAt(X[i]) - Y[i];
             antiGradient[0] -= 2 * error * Math.sin(this.omega * X[i] + this.phi);
