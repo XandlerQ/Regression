@@ -1,0 +1,9 @@
+{
+	"type" : "Sine",
+	"X" : [0, 0.035, 0.821, 1.213, 1.999, 2.392],
+	"Y" : [0.706, 0, 0, 5, -5, 0],
+	"initialParameters" : [4, 4.5, 3],
+	"numeratorDegree" : -1,
+	"dotCount" : -1,
+	"solver" : "GD"
+}

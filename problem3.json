@@ -1,0 +1,9 @@
+{
+	"type" : "Sphere2",
+	"X" : [],
+	"Y" : [],
+	"initialParameters" : [],
+	"numeratorDegree" : -1,
+	"dotCount" : 3,
+	"solver" : "HJ"
+}
