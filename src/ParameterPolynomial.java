@@ -48,6 +48,11 @@ public class ParameterPolynomial extends ParameterFunction {
     }
 
     @Override
+    public double getParameter(int i) {
+        return this.coefficients[i];
+    }
+
+    @Override
     public void setParameters(double[] parameters) {
         if (this.degree + 1 >= 0) System.arraycopy(parameters, 0, this.coefficients, 0, this.degree + 1);
     }
@@ -89,7 +94,7 @@ public class ParameterPolynomial extends ParameterFunction {
     }
 
     @Override
-    public double[] squareErrorParameterAntiGradient(double[] X, double[] Y) {
+    public double[] getAntiGradient(double[] X, double[] Y) {
         double[] antiGradient = new double[this.parameterCount];
         for (int i = 0; i < X.length; i++) {
             double error = evaluateAt(X[i]) - Y[i];

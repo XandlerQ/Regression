@@ -61,6 +61,22 @@ public class ParameterSine extends ParameterFunction {
     }
 
     @Override
+    public double getParameter(int i) {
+        switch (i) {
+            case 0 -> {
+                return this.k;
+            }
+            case 1 -> {
+                return this.phi;
+            }
+            case 2 -> {
+                return this.omega;
+            }
+        }
+        return 0;
+    }
+
+    @Override
     public void setParameters(double[] parameters) {
         this.k = parameters[0];
         this.phi = parameters[1];
@@ -91,7 +107,7 @@ public class ParameterSine extends ParameterFunction {
     }
 
     @Override
-    public double[] squareErrorParameterAntiGradient(double[] X, double[] Y) {
+    public double[] getAntiGradient(double[] X, double[] Y) {
         double[] antiGradient = new double[this.parameterCount];
         for (int i = 0; i < X.length; i++) {
             double error = evaluateAt(X[i]) - Y[i];

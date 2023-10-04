@@ -58,6 +58,12 @@ public class ParameterRational extends ParameterFunction {
     }
 
     @Override
+    public double getParameter(int i) {
+        if (i <= this.numerator.getDegree()) return this.numerator.getParameter(i);
+        else return this.denominator.getParameter(i - this.numerator.getDegree() - 1);
+    }
+
+    @Override
     public void setParameters(double[] parameters) {
         for (int i = 0; i <= this.numerator.getDegree(); i++) {
             this.numerator.getCoefficients()[i] = parameters[i];
@@ -97,7 +103,7 @@ public class ParameterRational extends ParameterFunction {
     }
 
     @Override
-    public double[] squareErrorParameterAntiGradient(double[] X, double[] Y) {
+    public double[] getAntiGradient(double[] X, double[] Y) {
         double[] antiGradient = new double[this.parameterCount];
         for (int i = 0; i < X.length; i++) {
             double denominatorValue = this.denominator.evaluateAt(X[i]);

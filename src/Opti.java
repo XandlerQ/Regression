@@ -129,13 +129,14 @@ public class Opti {
         boolean improved = false;
 
         for (int i = 0; i < this.function.getParameterCount(); i++) {
+            double initialParameterValue = this.function.getParameter(i);
             this.function.adjustParameter(i, this.currentStepSize);
             double newSqError = this.function.squareError(this.X, this.Y);
-            if (newSqError > this.currentSqError) {
+            if (newSqError >= this.currentSqError) {
                 this.function.adjustParameter(i, -2 * this.currentStepSize);
                 newSqError = this.function.squareError(this.X, this.Y);
-                if (newSqError > this.currentSqError) {
-                    this.function.adjustParameter(i, this.currentStepSize);
+                if (newSqError >= this.currentSqError) {
+                    this.function.setParameter(i, initialParameterValue);
                 }
                 else {
                     this.lastSqError = this.currentSqError;
@@ -159,7 +160,7 @@ public class Opti {
 
         while (this.lastSqError - this.currentSqError > epsilon) {
             double[] currentIterationInitialParameters = this.function.getParameters();
-            antiGradient = this.function.squareErrorParameterAntiGradient(this.X, this.Y);
+            antiGradient = this.function.getAntiGradient(this.X, this.Y);
             double a = 0;
             double b = 1;
             double bestSqError = this.currentSqError;
@@ -220,7 +221,7 @@ public class Opti {
 
     public boolean gradientDescentOptimumStep(double epsilon, double innerEpsilon) {
         double[] currentIterationInitialParameters = this.function.getParameters();
-        double[] antiGradient = this.function.squareErrorParameterAntiGradient(this.X, this.Y);
+        double[] antiGradient = this.function.getAntiGradient(this.X, this.Y);
         double a = 0;
         double b = 1;
         double bestSqError = this.currentSqError;
@@ -261,7 +262,7 @@ public class Opti {
             this.function.adjustParameter(i, lambda * antiGradient[i]);
         }
         double newSqError = this.function.squareError(this.X, this.Y);
-        if (newSqError > bestSqError) {
+        if (newSqError > bestSqError && bestSqErrorParameters != null) {
             this.function.setParameters(bestSqErrorParameters);
             newSqError = bestSqError;
         }
@@ -269,7 +270,7 @@ public class Opti {
 
         if (newSqError > this.currentSqError) {
             this.function.setParameters(currentIterationInitialParameters);
-            return false;
+            return true;
         }
         else {
             this.lastSqError = this.currentSqError;

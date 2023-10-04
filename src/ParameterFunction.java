@@ -21,15 +21,19 @@ public abstract class ParameterFunction {
 
     public abstract double[] getParameters();
 
+    public abstract double getParameter(int i);
+
     public abstract void setParameters(double[] parameters);
 
     public abstract void adjustParameter(int i, double value);
 
     public abstract void setParameter(int i, double value);
 
-    public abstract double evaluateAt(double x);
+    public double evaluateAt(double x) {
+        return 0;
+    }
 
-    public abstract double[] squareErrorParameterAntiGradient(double[] X, double[] Y);
+    public abstract double[] getAntiGradient(double[] X, double[] Y);
 
     public double[] getValueArray(double[] x) {
         double[] values = new double[x.length];

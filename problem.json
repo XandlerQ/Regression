@@ -4,5 +4,6 @@
 	"Y" : [18, 11, 3, 2, 6, 51],
 	"initialParameters" : [6, -2, 0.85],
 	"numeratorDegree" : -1,
-	"solver" : "HJ"
+	"dotCount" : -1,
+	"solver" : "GD"
 }
