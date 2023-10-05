@@ -1,4 +1,4 @@
-public class Opti {
+public class Regression {
     private ParameterFunction function;
     private double[] X;
     private double[] Y;
@@ -7,7 +7,7 @@ public class Opti {
     private double lastSqError;
     private int iterationCount;
 
-    Opti() {
+    Regression() {
         this.function = null;
         this.X = null;
         this.Y = null;
@@ -17,7 +17,7 @@ public class Opti {
         this.iterationCount = 0;
     }
 
-    Opti(ParameterFunction function, double[] x, double[] y) {
+    Regression(ParameterFunction function, double[] x, double[] y) {
         this.function = function;
         this.X = x;
         this.Y = y;

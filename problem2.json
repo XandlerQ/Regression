@@ -5,5 +5,5 @@
 	"initialParameters" : [4, 4.5, 3],
 	"numeratorDegree" : -1,
 	"dotCount" : -1,
-	"solver" : "GD"
+	"solver" : "HJ"
 }
