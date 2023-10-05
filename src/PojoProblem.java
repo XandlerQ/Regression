@@ -4,7 +4,6 @@ public class PojoProblem {
     private double[] Y;
     private double[] initialParameters;
     private int numeratorDegree;
-    private int dotCount;
     private String solver;
 
     PojoProblem() {
@@ -13,7 +12,6 @@ public class PojoProblem {
         this.Y = null;
         this.initialParameters = null;
         this.numeratorDegree = -1;
-        this.dotCount = -1;
         this.solver = "None";
     }
 
@@ -35,10 +33,6 @@ public class PojoProblem {
 
     public int getNumeratorDegree() {
         return numeratorDegree;
-    }
-
-    public int getDotCount() {
-        return dotCount;
     }
 
     public String getSolver() {
@@ -63,10 +57,6 @@ public class PojoProblem {
 
     public void setNumeratorDegree(int numeratorDegree) {
         this.numeratorDegree = numeratorDegree;
-    }
-
-    public void setDotCount(int dotCount) {
-        this.dotCount = dotCount;
     }
 
     public void setSolver(String solver) {
