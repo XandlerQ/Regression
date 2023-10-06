@@ -106,7 +106,7 @@
 	0.981826563,
 	0.990963986
 	],
-	"initialParameters" : [6, -2, 0.85],
+	"initialParameters" : [1, 1],
 	"numeratorDegree" : -1,
-	"solver" : "GD"
+	"solver" : "HJ"
 }

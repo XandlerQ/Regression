@@ -59,6 +59,10 @@ public class Regression {
         return this.function.getValueArray(x);
     }
 
+    public double squareError() {
+        return this.function.squareError(this.X, this.Y);
+    }
+
     public void setFunction(ParameterFunction function) {
         this.function = function;
         reset();

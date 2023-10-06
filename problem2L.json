@@ -1,5 +1,5 @@
 {
-	"type" : "Sine",
+	"type" : "Polynomial",
 	"X" : [
 0,
 0.02,
@@ -106,7 +106,7 @@
 -0.131053626,
 -0.284656665
 ],
-	"initialParameters" : [-1, 0.5, 3.14],
+	"initialParameters" : [1, 1],
 	"numeratorDegree" : -1,
 	"solver" : "HJ"
 }

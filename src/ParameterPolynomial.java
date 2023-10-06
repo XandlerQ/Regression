@@ -13,7 +13,7 @@ public class ParameterPolynomial extends ParameterFunction {
         this.type = "Polynomial";
         this.coefficients = coefficients;
         this.degree = coefficients.length - 1;
-        this.parameterCount = this.degree + 1;
+        this.parameterCount = coefficients.length;
         normalize();
     }
 

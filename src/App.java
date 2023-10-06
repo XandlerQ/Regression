@@ -6,6 +6,7 @@ import com.google.gson.*;
 import processing.core.*;
 import java.awt.*;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class App extends PApplet{
     public PApplet processingRef = this;
@@ -13,6 +14,7 @@ public class App extends PApplet{
     private double epsilon = 0.000001;
     private double[] plotXArray = new double[251];
     private boolean done = false;
+    private boolean report = false;
     private String solver;
     private String type;
 
@@ -24,11 +26,11 @@ public class App extends PApplet{
 
     public void setup() {
         background(0);
-        frameRate(10);
+        frameRate(300);
         Gson gson = new Gson();
         PojoProblem problem = null;
         try {
-            JsonReader reader = new JsonReader(new FileReader("problem1.json"));
+            JsonReader reader = new JsonReader(new FileReader("problem3.json"));
             problem = gson.fromJson(reader, PojoProblem.class);
         }
         catch (Exception exception) {
@@ -84,7 +86,17 @@ public class App extends PApplet{
             this.plot.defaultDraw();
         }
         else {
-            System.out.println(this.regression.getIterationCount());
+            if (!this.report) {
+                System.out.println(this.regression.getIterationCount());
+                double[] parameters = this.regression.getParameters();
+                ArrayList<Double> parameterAL = new ArrayList<>();
+                for (int i = 0; i < parameters.length; i++) {
+                    parameterAL.add(parameters[i]);
+                }
+                System.out.println(parameterAL);
+                System.out.println(this.regression.squareError());
+                this.report = true;
+            }
             this.plot.defaultDraw();
         }
     }
